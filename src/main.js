@@ -10,10 +10,24 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 /* import specific icons */
-import { faSortDown, faSortUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSortDown,
+  faSortUp,
+  faMagnifyingGlass,
+  faRankingStar,
+  faCircleXmark,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
-library.add(faSortDown, faSortUp);
+library.add(
+  faSortDown,
+  faSortUp,
+  faMagnifyingGlass,
+  faRankingStar,
+  faCircleXmark,
+  faXmark
+);
 
 const app = createApp(App);
 

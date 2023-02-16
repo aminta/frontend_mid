@@ -16,7 +16,7 @@ let store = useProjectsStore();
         :key="nanoid()"
         :name="project.name"
         :description="project.description"
-        :createdAt="project.createdAt"
+        :created-at="project.createdAt"
         :stars="project.stars"
       />
     </ul>

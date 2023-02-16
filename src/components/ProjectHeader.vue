@@ -4,10 +4,10 @@ import ProjectItem from "./ProjectItem.vue";
 
 <template>
   <ProjectItem
-    isHeader
+    is-Header
     :name="`Nome e descrizione`"
     :stars="`Rating`"
-    :createdAt="`Data di creazione`"
+    :created-at="`Data di creazione`"
   />
 </template>
 

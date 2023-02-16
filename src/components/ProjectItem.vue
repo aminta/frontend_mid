@@ -5,7 +5,7 @@ import { formatDate } from "@/utilities/formatters.js";
 let props = defineProps({
   name: String,
   description: String,
-  createdAt: String,
+  "created-at": String,
   stars: Number,
   isHeader: Boolean,
 });
