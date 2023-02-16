@@ -1,7 +1,6 @@
 <script setup>
 import ProjectItem from "./ProjectItem.vue";
 import { useProjectsStore } from "@/stores/projects.js";
-import { nanoid } from "nanoid";
 import ProjectHeader from "./ProjectHeader.vue";
 
 let store = useProjectsStore();
@@ -13,7 +12,7 @@ let store = useProjectsStore();
       <ProjectHeader />
       <ProjectItem
         v-for="project in store.projectsSorted"
-        :key="nanoid()"
+        :key="project.id"
         :name="project.name"
         :description="project.description"
         :created-at="project.createdAt"

@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { sorter } from "@/utilities/sorters";
-import { isTop } from "../utilities/filters";
+import { isTop } from "@/utilities/filters";
+import { nanoid } from "nanoid";
 
 export const useProjectsStore = defineStore("projects", {
   state: () => ({
@@ -13,7 +14,9 @@ export const useProjectsStore = defineStore("projects", {
   actions: {
     async fill() {
       let r = await import("@/data.json");
-      this.$state = { projects: r.default };
+      this.$state = {
+        projects: r.default.map((project) => ({ ...project, id: nanoid() })),
+      };
     },
     setSortOrder(sortOrder) {
       this.sortOrder = sortOrder;
@@ -23,6 +26,13 @@ export const useProjectsStore = defineStore("projects", {
     },
     setShowOnlyTopThreProjects(bool) {
       this.showOnlyTopThree = bool;
+    },
+    toggleStarToAProject(id, toggle) {
+      this.projects.map((project) => {
+        if (project.id === id) {
+          toggle ? project.stars++ : project.stars--;
+        }
+      });
     },
   },
   getters: {

@@ -17,7 +17,10 @@ import {
   faRankingStar,
   faCircleXmark,
   faXmark,
+  faStar as faStarSolid,
 } from "@fortawesome/free-solid-svg-icons";
+
+import { faStar } from "@fortawesome/free-regular-svg-icons";
 
 /* add icons to the library */
 library.add(
@@ -26,7 +29,9 @@ library.add(
   faMagnifyingGlass,
   faRankingStar,
   faCircleXmark,
-  faXmark
+  faXmark,
+  faStar,
+  faStarSolid
 );
 
 const app = createApp(App);
