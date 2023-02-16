@@ -3,6 +3,7 @@ import { sorter } from "@/utilities/sorters";
 import { isTop } from "@/utilities/filters";
 import { nanoid } from "nanoid";
 import { formatDateForStorage } from "@/utilities/formatters";
+import useStorage from "@/composables/useStorage.js";
 
 export const useProjectsStore = defineStore("projects", {
   state: () => ({
@@ -14,10 +15,20 @@ export const useProjectsStore = defineStore("projects", {
   }),
   actions: {
     async fill() {
-      let r = await import("@/data.json");
-      this.$state = {
-        projects: r.default.map((project) => ({ ...project, id: nanoid() })),
-      };
+      const { data, write } = useStorage("projects", this.$state);
+      if (data) {
+        this.$patch(data);
+      } else {
+        let r = await import("@/data.json");
+        this.$patch({
+          projects: r.default.map((project) => ({
+            ...project,
+            id: nanoid(),
+            starredFromCurrentUser: false,
+          })),
+        });
+        write("projects", this.$state);
+      }
     },
     setSortOrder(sortOrder) {
       this.sortOrder = sortOrder;
@@ -31,7 +42,22 @@ export const useProjectsStore = defineStore("projects", {
     toggleStarToAProject(id, toggle) {
       this.projects.map((project) => {
         if (project.id === id) {
-          toggle ? project.stars++ : project.stars--;
+          if (toggle) {
+            project.stars++;
+          } else {
+            project.stars--;
+          }
+        }
+      });
+    },
+    toggleStarredFromCurrentUser(id, toggle) {
+      this.projects.map((project) => {
+        if (project.id === id) {
+          if (toggle) {
+            project.starredFromCurrentUser = true;
+          } else {
+            project.starredFromCurrentUser = false;
+          }
         }
       });
     },

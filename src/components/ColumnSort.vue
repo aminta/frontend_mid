@@ -6,7 +6,12 @@ let store = useProjectsStore();
 let props = defineProps({
   field: String,
 });
-let isAsc = ref(false);
+
+console.log("store", store.sortOrder, store.sortBy);
+console.log("partenza", store.sortOrder && store.sortBy === props.field);
+
+let isAsc = ref(store.sortOrder === "asc" && store.sortBy === props.field);
+
 let iconClasses = computed(() =>
   [
     "fa-solid",

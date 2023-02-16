@@ -21,8 +21,9 @@ let classObject = {
   "flex-row": props.isHeader,
   "justify-between": props.isHeader,
 };
+let item = store.projects.find((project) => project.id === key);
 
-let starred = ref(false);
+let starred = ref(item?.starredFromCurrentUser);
 
 let iconClasses = computed(() =>
   starred.value ? "fa-solid fa-star" : "fa-regular fa-star"
@@ -39,9 +40,10 @@ function toggleStar() {
 
 watch(starred, (value) => {
   store.toggleStarToAProject(key, value);
+  store.toggleStarredFromCurrentUser(key, value);
 });
 </script>
-<font-awesome-icon icon="fa-solid fa-star" />
+
 <template>
   <li class="grid grid-cols-4 gap-y-10 border-b border-gray-300 pb-2">
     <header :class="classObject">

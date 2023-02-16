@@ -43,6 +43,8 @@ const onSave = () => {
     store.addNewProject(newProject);
     showModal.value = false;
   }
+  newProject.name = "";
+  newProject.description = "";
 };
 </script>
 <template>

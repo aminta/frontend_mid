@@ -3,7 +3,7 @@ import { computed, ref, watch } from "vue";
 import { useProjectsStore } from "@/stores/projects.js";
 
 let store = useProjectsStore();
-let isPressed = ref(false);
+let isPressed = ref(store.showOnlyTopThree);
 
 let toggleButton = () => (isPressed.value = !isPressed.value);
 
