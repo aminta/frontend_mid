@@ -12,7 +12,7 @@ let store = useProjectsStore();
     <ul class="grid auto-rows-auto gap-y-4">
       <ProjectHeader />
       <ProjectItem
-        v-for="project in store.projects"
+        v-for="project in store.projectsSorted"
         :key="nanoid()"
         :name="project.name"
         :description="project.description"
