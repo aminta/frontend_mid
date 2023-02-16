@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { sorter } from "@/utilities/sorters";
 import { isTop } from "@/utilities/filters";
 import { nanoid } from "nanoid";
+import { formatDateForStorage } from "@/utilities/formatters";
 
 export const useProjectsStore = defineStore("projects", {
   state: () => ({
@@ -32,6 +33,14 @@ export const useProjectsStore = defineStore("projects", {
         if (project.id === id) {
           toggle ? project.stars++ : project.stars--;
         }
+      });
+    },
+    addNewProject(newProject) {
+      this.projects.unshift({
+        ...newProject,
+        stars: 0,
+        id: nanoid(),
+        createdAt: formatDateForStorage(new Date()),
       });
     },
   },
