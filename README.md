@@ -1,6 +1,6 @@
 # frontend_mid
 
-This template should help get you started developing with Vue 3 in Vite.
+App to start, sort and projects.
 
 ## Recommended IDE Setup
 
