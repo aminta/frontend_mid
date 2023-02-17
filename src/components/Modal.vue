@@ -1,8 +1,10 @@
 <script setup>
 defineProps({
   show: Boolean,
+  dismissText: String,
+  saveText: String,
 });
-let emit = defineEmits(["close", "save"]);
+let emit = defineEmits(["dismiss", "confirm"]);
 </script>
 
 <template>
@@ -15,15 +17,15 @@ let emit = defineEmits(["close", "save"]);
             <footer class="modal-footer-buttons-container">
               <button
                 class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded disabled:bg-gray-400"
-                @click="emit('close')"
+                @click="emit('dismiss')"
               >
-                Close
+                {{ dismissText ? dismissText : "Close" }}
               </button>
               <button
                 class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded disabled:bg-gray-400"
-                @click="emit('save')"
+                @click="emit('confirm')"
               >
-                Save
+                {{ saveText ? saveText : "Save" }}
               </button>
             </footer>
           </slot>

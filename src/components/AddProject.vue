@@ -21,7 +21,6 @@ const onClose = () => {
 let validationErrors = reactive([]);
 
 const onSave = () => {
-  console.log("noNameInserted", newProject.name.trim() === "");
   const noNameInserted =
     newProject.name.trim() === ""
       ? "Attenzione, inserire descrizione progetto"
@@ -55,7 +54,7 @@ const onSave = () => {
     Add new project
   </button>
   <Teleport to="body">
-    <Modal :show="showModal" @close="onClose" @save="onSave">
+    <Modal :show="showModal" @dismiss="onClose" @confirm="onSave">
       <template #body>
         <form class="mt-6">
           <div class="flex flex-col gap-4">
