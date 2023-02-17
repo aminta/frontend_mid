@@ -1,6 +1,6 @@
-# frontend_mid
+# frontend_mid_options
 
-App to start, sort and projects.
+App to start, sort and projects. Supporting Vue Composition Api.
 
 ## Recommended IDE Setup
 
@@ -20,6 +20,11 @@ npm install
 
 ```sh
 npm run dev
+```
+
+### Compile, build and upload to Github pages
+```sh
+npm run deploy
 ```
 
 ### Compile and Minify for Production

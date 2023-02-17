@@ -1,15 +1,30 @@
 <script setup>
 import Modal from "@/components/Modal.vue";
-import { ref, reactive } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 import { useProjectsStore } from "@/stores/projects.js";
+import Errors from "./Errors.vue";
 
 let store = useProjectsStore();
 
 let showModal = ref(false);
 
+const errorsMessages = {
+  name: "Attenzione, inserire nome progetto",
+  description: "Attenzione, inserire descrizione progetto",
+};
+
+let validationErrors = reactive([]);
+
 let newProject = reactive({
   name: "",
   description: "",
+});
+
+const fieldsToCheck = computed(() => {
+  return {
+    name: newProject.name,
+    description: newProject.description,
+  };
 });
 
 const onClose = () => {
@@ -18,33 +33,48 @@ const onClose = () => {
   newProject.description = "";
 };
 
-let validationErrors = reactive([]);
+const isEmpty = (el) => {
+  return el.trim() === "";
+};
+
+const checkEmptyFields = (fields) => {
+  validationErrors.splice(0);
+  let result = false;
+  for (const property in fields) {
+    const value = fields[property];
+    if (isEmpty(value)) {
+      result = true;
+      validationErrors.push(errorsMessages[property]);
+    }
+  }
+  return result;
+};
 
 const onSave = () => {
-  const noNameInserted =
-    newProject.name.trim() === ""
-      ? "Attenzione, inserire descrizione progetto"
-      : false;
-  const noDescriptionInserted =
-    newProject.description.trim() === ""
-      ? "Attenzione, inserire nome progetto"
-      : false;
+  validationErrors.splice(0);
 
-  if (noNameInserted || noDescriptionInserted) {
-    if (noNameInserted && !validationErrors.includes(noNameInserted))
-      validationErrors.push(noNameInserted);
-    if (
-      noDescriptionInserted &&
-      !validationErrors.includes(noDescriptionInserted)
-    )
-      validationErrors.push(noDescriptionInserted);
-  } else {
+  const thereAreErrros = checkEmptyFields(fieldsToCheck.value);
+
+  if (!thereAreErrros) {
+    validationErrors.splice(0);
     store.addNewProject(newProject);
     showModal.value = false;
+    newProject.name = "";
+    newProject.description = "";
   }
-  newProject.name = "";
-  newProject.description = "";
 };
+watch(
+  () => newProject.name,
+  (value) => {
+    checkEmptyFields(fieldsToCheck.value);
+  }
+);
+watch(
+  () => newProject.description,
+  (value) => {
+    checkEmptyFields(fieldsToCheck.value);
+  }
+);
 </script>
 <template>
   <button
@@ -78,7 +108,7 @@ const onSave = () => {
             </div>
           </div>
         </form>
-        {{ validationError ? validationError : "" }}
+        <Errors :errors="validationErrors" />
       </template>
     </Modal>
   </Teleport>
